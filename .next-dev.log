@@ -1,0 +1,13 @@
+
+> yacht-booking-sa@0.1.0 dev
+> next dev
+
+  ▲ Next.js 13.5.11
+  - Local:        http://localhost:3000
+  - Environments: .env
+  - Experiments (use at your own risk):
+     · serverActions
+
+ ✓ Ready in 12.6s
+ ○ Compiling /(public)/yachts/page ...
+ ✓ Compiled /(public)/yachts/page in 18.8s (638 modules)

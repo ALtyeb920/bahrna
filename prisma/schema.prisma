@@ -1,0 +1,274 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ── Users & Auth ──────────────────────────────────────────────────────────────
+
+model User {
+  id              String    @id @default(cuid())
+  email           String?   @unique
+  phone           String    @unique
+  passwordHash    String
+  name            String
+  role            String    @default("CUSTOMER") // ADMIN | OPERATOR | CUSTOMER
+  status          String    @default("ACTIVE")   // ACTIVE | SUSPENDED | PENDING
+  avatar          String?
+  emailVerified   Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  store           Store?
+  bookings        Booking[]
+  reviews         Review[]
+  notifications   Notification[]
+
+  @@index([email])
+  @@index([phone])
+  @@index([role])
+}
+
+// ── Store ────────────────────────────────────────────────────────────────────
+
+model Store {
+  id               String    @id @default(cuid())
+  slug             String    @unique
+  name             String
+  description      String?
+  logo             String?
+  coverImage       String?
+  city             String
+  marina           String?
+  address          String?
+  phone            String?
+  whatsapp         String?
+  email            String?
+  policies         String?
+  cancellationTerms String?
+  operatingHours   String?
+  status           String    @default("PENDING") // PENDING | ACTIVE | SUSPENDED | REJECTED
+  commissionRate   Float     @default(12.0)
+  totalRevenue     Float     @default(0)
+  totalPayout      Float     @default(0)
+  totalCommission  Float     @default(0)
+  averageRating    Float?
+  ownerId          String    @unique
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  owner            User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  yachts           Yacht[]
+  bookings         Booking[]
+  payouts          Payout[]
+
+  @@index([slug])
+  @@index([city])
+  @@index([status])
+}
+
+// ── Yacht ────────────────────────────────────────────────────────────────────
+
+model Yacht {
+  id                 String    @id @default(cuid())
+  slug               String    @unique
+  name               String
+  type               String
+  typeLabel          String
+  description        String
+  location           String
+  city               String
+  status             String    @default("ACTIVE") // ACTIVE | INACTIVE | MAINTENANCE | PENDING
+  capacity           Int
+  crewCount          Int       @default(0)
+  pricePerHour       Int
+  minimumHours       Int       @default(2)
+  length             Int?
+  cabins             Int?
+  bathrooms          Int?
+  buildYear          Int?
+  manufacturer       String?
+  departurePoint     String?
+  cancellationPolicy String?
+  rating             Float     @default(0)
+  reviews            Int       @default(0)
+  viewCount          Int       @default(0)
+  isFeatured         Boolean   @default(false)
+
+  // Amenities flags
+  hasAC              Boolean   @default(false)
+  hasWifi            Boolean   @default(false)
+  hasKitchen         Boolean   @default(false)
+  hasWaterSports     Boolean   @default(false)
+  hasJetSki          Boolean   @default(false)
+  hasFishing         Boolean   @default(false)
+  hasDiving          Boolean   @default(false)
+  hasMusic           Boolean   @default(false)
+  hasSunDeck         Boolean   @default(false)
+  hasTV              Boolean   @default(false)
+
+  storeId            String
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  store              Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  images             YachtImage[]
+  bookings           Booking[]
+  reviews_list       Review[]
+
+  @@index([storeId])
+  @@index([city])
+  @@index([status])
+  @@index([type])
+}
+
+model YachtImage {
+  id        String   @id @default(cuid())
+  url       String
+  isPrimary Boolean  @default(false)
+  sortOrder Int      @default(0)
+  yachtId   String
+  yacht     Yacht    @relation(fields: [yachtId], references: [id], onDelete: Cascade)
+
+  @@index([yachtId])
+}
+
+// ── Booking ──────────────────────────────────────────────────────────────────
+
+model Booking {
+  id                 String    @id @default(cuid())
+  bookingNumber      String    @unique
+  date               String
+  startTime          String
+  duration           Int
+  numberOfGuests     Int
+  baseAmount         Int
+  addonAmount        Int       @default(0)
+  subtotal           Int
+  platformCommission Int
+  ownerPayout        Int
+  vatAmount          Int       @default(0)
+  total              Int
+  status             String    @default("PENDING")  // PENDING | CONFIRMED | CANCELLED | COMPLETED | IN_PROGRESS
+  paymentStatus      String    @default("PENDING")  // PENDING | PAID | FAILED | REFUNDED
+  paymentMethod      String?
+  customerName       String
+  customerPhone      String
+  customerEmail      String?
+  notes              String?
+  operatorNotes      String?
+  yachtId            String
+  storeId            String
+  userId             String?
+  paidAt             DateTime?
+  confirmedAt        DateTime?
+  cancelledAt        DateTime?
+  completedAt        DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  yacht              Yacht     @relation(fields: [yachtId], references: [id])
+  store              Store     @relation(fields: [storeId], references: [id])
+  user               User?     @relation(fields: [userId], references: [id])
+  payment            Payment?
+  review             Review?
+  payout             Payout?
+
+  @@index([storeId])
+  @@index([yachtId])
+  @@index([userId])
+  @@index([status])
+  @@index([date])
+}
+
+// ── Payment ──────────────────────────────────────────────────────────────────
+
+model Payment {
+  id            String   @id @default(cuid())
+  transactionId String?  @unique
+  amount        Int
+  currency      String   @default("SAR")
+  method        String   // MADA | VISA | MASTERCARD | APPLE_PAY | STC_PAY | CASH
+  provider      String   @default("MOYASAR")
+  status        String   // PAID | FAILED | REFUNDED | PENDING
+  metadata      String?
+  paidAt        DateTime?
+  bookingId     String   @unique
+  createdAt     DateTime @default(now())
+
+  booking       Booking  @relation(fields: [bookingId], references: [id])
+}
+
+// ── Payout ───────────────────────────────────────────────────────────────────
+
+model Payout {
+  id          String   @id @default(cuid())
+  amount      Int
+  status      String   @default("PENDING") // PENDING | PROCESSING | PAID | FAILED
+  notes       String?
+  paidAt      DateTime?
+  storeId     String
+  bookingId   String?  @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  store       Store    @relation(fields: [storeId], references: [id])
+  booking     Booking? @relation(fields: [bookingId], references: [id])
+
+  @@index([storeId])
+  @@index([status])
+}
+
+// ── Review ───────────────────────────────────────────────────────────────────
+
+model Review {
+  id          String   @id @default(cuid())
+  rating      Int
+  comment     String?
+  response    String?
+  isPublished Boolean  @default(true)
+  yachtId     String
+  bookingId   String   @unique
+  customerId  String
+  createdAt   DateTime @default(now())
+
+  yacht       Yacht    @relation(fields: [yachtId], references: [id])
+  booking     Booking  @relation(fields: [bookingId], references: [id])
+  customer    User     @relation(fields: [customerId], references: [id])
+
+  @@index([yachtId])
+  @@index([customerId])
+}
+
+// ── Notification ─────────────────────────────────────────────────────────────
+
+model Notification {
+  id        String   @id @default(cuid())
+  type      String   // BOOKING_NEW | BOOKING_CONFIRMED | BOOKING_CANCELLED | PAYMENT | REVIEW | SYSTEM
+  title     String
+  message   String
+  isRead    Boolean  @default(false)
+  metadata  String?
+  userId    String
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([isRead])
+}
+
+// ── Settings ─────────────────────────────────────────────────────────────────
+
+model Setting {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String
+  description String?
+  updatedAt   DateTime @updatedAt
+
+  @@index([key])
+}

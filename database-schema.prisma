@@ -1,0 +1,3 @@
+// ⚠️ هذا الملف معطّل — يُرجع مراجعة docs/database-schema-reference.md
+// This file is disabled — see docs/database-schema-reference.md for the full PostgreSQL reference schema.
+// The active schema is: prisma/schema.prisma (SQLite for local dev)
