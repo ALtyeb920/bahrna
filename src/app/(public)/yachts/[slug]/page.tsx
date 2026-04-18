@@ -105,7 +105,7 @@ export default async function YachtDetailsPage({ params }: { params: { slug: str
                 { icon: Ruler, label: "الطول", value: yacht.length ? `${yacht.length} متر` : "—" },
                 { icon: BedDouble, label: "الكبائن", value: yacht.cabins ?? "—" },
                 { icon: Bath, label: "الحمامات", value: yacht.bathrooms ?? "—" },
-                { icon: ShipWheel, label: "الطاقم", value: yacht.crew ? `${yacht.crew} أشخاص` : "—" },
+                { icon: ShipWheel, label: "الطاقم", value: yacht.crewCount ? `${yacht.crewCount} أشخاص` : "—" },
                 { icon: Calendar, label: "سنة الصنع", value: yacht.buildYear ?? "—" },
                 { icon: MapPin, label: "مكان الانطلاق", value: yacht.departurePoint ?? "—" },
                 { icon: Anchor, label: "النوع", value: yacht.typeLabel },

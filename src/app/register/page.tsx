@@ -96,7 +96,7 @@ function RegisterForm() {
       {role === "operator" && (
         <div className="mb-4 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 flex items-start gap-2 text-xs text-amber-700">
           <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
-          سيتم إنشاء متجرك بحالة "قيد المراجعة" حتى تتم الموافقة من الإدارة.
+          سيتم إنشاء متجرك بحالة &ldquo;قيد المراجعة&rdquo; حتى تتم الموافقة من الإدارة.
         </div>
       )}
 

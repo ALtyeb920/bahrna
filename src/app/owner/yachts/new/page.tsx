@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createYacht } from "@/lib/actions/yacht";
-import { Ship, Image, DollarSign, CheckSquare, FileText, ChevronRight, ChevronLeft, Save, AlertCircle } from "lucide-react";
+import { Ship, Image as ImageIcon, DollarSign, CheckSquare, FileText, ChevronRight, ChevronLeft, Save, AlertCircle } from "lucide-react";
 import Link from "next/link";
 
 const YACHT_TYPES = [
@@ -247,7 +247,7 @@ export default function NewYachtPage() {
       {step === 2 && (
         <div className="bg-white rounded-2xl border border-slate-200 p-6 space-y-5">
           <h2 className="font-extrabold text-[var(--navy)] text-lg flex items-center gap-2">
-            <Image className="h-5 w-5 text-[var(--ocean)]" /> الصور والموقع
+            <ImageIcon className="h-5 w-5 text-[var(--ocean)]" /> الصور والموقع
           </h2>
 
           <div>
@@ -354,7 +354,7 @@ export default function NewYachtPage() {
             <input type="checkbox" id="featured" checked={form.isFeatured} onChange={e => update("isFeatured", e.target.checked)} className="w-4 h-4" />
             <label htmlFor="featured" className="cursor-pointer">
               <p className="font-bold text-amber-800">⭐ جعل هذا اليخت مميزاً في الصفحة الرئيسية</p>
-              <p className="text-xs text-amber-600 mt-0.5">سيظهر في قسم "اليخوت المميزة" على الصفحة الرئيسية</p>
+              <p className="text-xs text-amber-600 mt-0.5">سيظهر في قسم &ldquo;اليخوت المميزة&rdquo; على الصفحة الرئيسية</p>
             </label>
           </div>
         </div>

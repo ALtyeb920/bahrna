@@ -2,7 +2,7 @@ import { getAdminStats, getAllBookings, getAdminStores } from "@/lib/server-data
 import { TrendingUp, Calendar, Store, Ship } from "lucide-react";
 
 export default async function AdminReportsPage() {
-  let stats = { totalRevenue: 0, totalCommissions: 0, totalPayouts: 0, totalBookings: 0, totalStores: 0, totalYachts: 0 };
+  let stats: Awaited<ReturnType<typeof getAdminStats>> = { totalRevenue: 0, totalCommissions: 0, totalPayouts: 0, totalBookings: 0, totalStores: 0, totalYachts: 0, activeStores: 0, pendingStores: 0, activeYachts: 0, pendingBookings: 0, confirmedBookings: 0, completedBookings: 0, totalUsers: 0, customerCount: 0, operatorCount: 0, pendingPayouts: 0 };
   let bookings: Awaited<ReturnType<typeof getAllBookings>> = [];
   let stores: Awaited<ReturnType<typeof getAdminStores>> = [];
 
