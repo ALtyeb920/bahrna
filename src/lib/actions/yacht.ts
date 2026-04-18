@@ -47,7 +47,7 @@ export async function updateYacht(yachtId: string, data: Record<string, unknown>
       data: {
         name: String(data.name), location: String(data.location ?? ""), city: String(data.city ?? ""),
         description: String(data.description ?? ""), type: String(data.type),
-        typeLabel: TYPE_LABELS[String(data.type)] ?? "يخت",
+        typeLabel: TYPE_LABELS[String(data.type)] ?? "يخт",
         status: String(data.status ?? "ACTIVE"),
         capacity: Number(data.capacity), pricePerHour: Number(data.pricePerHour),
         minimumHours: Number(data.minimumHours ?? 2),
@@ -61,6 +61,8 @@ export async function updateYacht(yachtId: string, data: Record<string, unknown>
         cancellationPolicy: data.cancellationPolicy ? String(data.cancellationPolicy) : null,
       },
     });
+    // Update primary image separately — unlike create, updates need to
+    // check for an existing primary image and either update or create it.
     if (data.image) {
       const existing = await db.yachtImage.findFirst({ where: { yachtId, isPrimary: true } });
       if (existing) {
