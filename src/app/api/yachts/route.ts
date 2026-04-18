@@ -27,13 +27,11 @@ export async function POST(request: Request) {
       description: body.description,
       type: body.type,
       typeLabel: body.typeLabel,
-      status: body.status || "AVAILABLE",
+      status: body.status || "ACTIVE",
       capacity: Number(body.capacity),
       pricePerHour: Number(body.pricePerHour),
       rating: Number(body.rating || 4.5),
       reviews: Number(body.reviews || 0),
-      image: body.image,
-      imagesJson: JSON.stringify([body.image]),
       length: body.length ? Number(body.length) : null,
       cabins: body.cabins ? Number(body.cabins) : null,
       hasAC: Boolean(body.hasAC),
@@ -43,6 +41,9 @@ export async function POST(request: Request) {
       hasJetSki: Boolean(body.hasJetSki),
       isFeatured: Boolean(body.isFeatured),
       storeId: store.id,
+      images: body.image ? {
+        create: { url: body.image, isPrimary: true, sortOrder: 0 },
+      } : undefined,
     },
   });
 

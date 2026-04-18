@@ -16,7 +16,6 @@ export async function PATCH(request: Request, { params }: { params: { id: string
       ...(body.status ? { status: body.status } : {}),
       ...(body.capacity ? { capacity: Number(body.capacity) } : {}),
       ...(body.pricePerHour ? { pricePerHour: Number(body.pricePerHour) } : {}),
-      ...(body.image ? { image: body.image, imagesJson: JSON.stringify([body.image]) } : {}),
       ...(body.length ? { length: Number(body.length) } : {}),
       ...(body.cabins ? { cabins: Number(body.cabins) } : {}),
       ...(typeof body.hasAC === "boolean" ? { hasAC: body.hasAC } : {}),
@@ -27,6 +26,15 @@ export async function PATCH(request: Request, { params }: { params: { id: string
       ...(typeof body.isFeatured === "boolean" ? { isFeatured: body.isFeatured } : {}),
     },
   });
+
+  if (body.image) {
+    const existing = await db.yachtImage.findFirst({ where: { yachtId: params.id, isPrimary: true } });
+    if (existing) {
+      await db.yachtImage.update({ where: { id: existing.id }, data: { url: body.image } });
+    } else {
+      await db.yachtImage.create({ data: { yachtId: params.id, url: body.image, isPrimary: true, sortOrder: 0 } });
+    }
+  }
 
   return NextResponse.json(yacht);
 }
