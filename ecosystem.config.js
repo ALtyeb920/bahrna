@@ -13,6 +13,9 @@ module.exports = {
         NODE_ENV: "production",
         PORT: 3000,
       },
+      error_file: "/var/log/pm2/bahrna-error.log",
+      out_file: "/var/log/pm2/bahrna-out.log",
+      log_date_format: "YYYY-MM-DD HH:mm:ss",
     },
   ],
 };
