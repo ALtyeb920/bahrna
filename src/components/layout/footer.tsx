@@ -54,21 +54,21 @@ export function Footer() {
               جدة، المملكة العربية السعودية
             </li>
             <li>
-              <a href="tel:+966110000000" className="flex items-center gap-3 hover:text-[var(--gold)] transition">
+              <a href="tel:+966530788837" className="flex items-center gap-3 hover:text-[var(--gold)] transition">
                 <Phone className="h-4 w-4 text-[var(--gold)] shrink-0" />
-                +966-11-000-0000
+                +966 53 078 8837
               </a>
             </li>
             <li>
-              <a href="https://wa.me/966500000000" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-[var(--gold)] transition">
+              <a href="https://wa.me/966530788837" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-[var(--gold)] transition">
                 <MessageCircle className="h-4 w-4 text-[var(--gold)] shrink-0" />
                 واتساب
               </a>
             </li>
             <li>
-              <a href="mailto:support@bahrna.sa" className="flex items-center gap-3 hover:text-[var(--gold)] transition">
+              <a href="mailto:yllaba7ar@gmail.com" className="flex items-center gap-3 hover:text-[var(--gold)] transition">
                 <Mail className="h-4 w-4 text-[var(--gold)] shrink-0" />
-                support@bahrna.sa
+                yllaba7ar@gmail.com
               </a>
             </li>
           </ul>

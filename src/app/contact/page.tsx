@@ -15,9 +15,9 @@ export default function ContactPage() {
   }
 
   const contactInfo = [
-    { icon: Phone, label: "الهاتف", value: "966-11-000-0000+", href: "tel:+966110000000" },
-    { icon: MessageCircle, label: "واتساب", value: "966-50-000-0000+", href: "https://wa.me/966500000000" },
-    { icon: Mail, label: "البريد الإلكتروني", value: "support@bahrna.sa", href: "mailto:support@bahrna.sa" },
+    { icon: Phone, label: "الهاتف", value: "+966 53 078 8837", href: "tel:+966530788837" },
+    { icon: MessageCircle, label: "واتساب", value: "+966 53 078 8837", href: "https://wa.me/966530788837" },
+    { icon: Mail, label: "البريد الإلكتروني", value: "yllaba7ar@gmail.com", href: "mailto:yllaba7ar@gmail.com" },
     { icon: MapPin, label: "الموقع", value: "جدة، المملكة العربية السعودية", href: "#" },
   ];
 
