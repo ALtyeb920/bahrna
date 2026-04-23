@@ -25,11 +25,11 @@ export default async function StoreDetailsPage({ params }: { params: { slug: str
           </div>
           <div className="rounded-xl bg-slate-50 p-4">
             <p className="text-xs text-slate-500">عدد اليخوت</p>
-            <p className="mt-1 font-bold text-brand-primary">{store.yachts}</p>
+            <p className="mt-1 font-bold text-brand-primary">{store.yachtCount}</p>
           </div>
           <div className="rounded-xl bg-slate-50 p-4">
             <p className="text-xs text-slate-500">عدد الحجوزات</p>
-            <p className="mt-1 font-bold text-brand-primary">{store.totalBookings}</p>
+            <p className="mt-1 font-bold text-brand-primary">{store.bookingCount}</p>
           </div>
         </div>
       </div>

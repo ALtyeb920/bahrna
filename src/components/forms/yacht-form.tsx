@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { createYacht } from "@/lib/actions/yacht";
-import { Anchor, Building2, CheckSquare, Image, Info, Layers, Save } from "lucide-react";
+import { Anchor, Building2, CheckSquare, Image as ImageIcon, Info, Layers, Save } from "lucide-react";
 
 type StoreOption = {
   id: string;
@@ -284,7 +284,7 @@ export function YachtForm({
       {/* Section 4: Features */}
       <section className="rounded-2xl border border-slate-200 bg-white p-6">
         <div className="mb-5 flex items-center gap-2 text-brand-primary">
-          <Image className="h-5 w-5" />
+          <ImageIcon className="h-5 w-5" />
           <h2 className="font-extrabold">المميزات والخدمات</h2>
         </div>
         <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">

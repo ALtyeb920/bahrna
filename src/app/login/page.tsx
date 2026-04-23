@@ -81,7 +81,7 @@ function LoginForm() {
               type={showPass ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
+              placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
               required
               autoComplete="current-password"
               className="w-full rounded-xl border border-slate-200 py-3 px-4 pl-10 text-sm outline-none focus:border-[var(--navy)] focus:ring-1 focus:ring-[var(--navy)]"
